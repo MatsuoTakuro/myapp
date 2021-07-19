@@ -54,6 +54,7 @@ group :test do
   # add, according to list 3.2
   gem 'rails-controller-testing', '1.0.4'
   gem 'rails-controller-testing', '1.0.4'
+  gem 'minitest',                 '5.14.4'
   gem 'minitest-reporters',       '1.3.8'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
