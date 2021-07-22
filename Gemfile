@@ -65,3 +65,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # add according to https://rubocop.org/
 gem 'rubocop', require: false
+
+# リスト 5.5: Gemfileにbootstrap-sassを追加する
+gem 'bootstrap-sass', '3.4.1'
