@@ -68,3 +68,6 @@ gem 'rubocop', require: false
 
 # リスト 5.5: Gemfileにbootstrap-sassを追加する
 gem 'bootstrap-sass', '3.4.1'
+
+# リスト 6.37: bcryptをGemfileに追加する
+gem 'bcrypt',         '3.1.13'
