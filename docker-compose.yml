@@ -15,4 +15,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    # Docker環境でByebugを使う方法 https://logicoffee.hatenablog.com/entry/2018/06/27/094027
+    stdin_open: true
+    tty: true
+
 
