@@ -1,15 +1,23 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update]
-  before_action :correct_user,   only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update]
+  before_action :correct_user,   only: [        :edit, :update]
 
+  # GET /users
+  def index
+    @users = User.all
+  end
+
+  # GET /users/1
   def show
     @user = User.find(params[:id])
   end
 
+  # GET /users/new
   def new
     @user = User.new
   end
 
+  # POST /users
   def create
     @user = User.new(user_params)
     if @user.save
@@ -27,6 +35,7 @@ class UsersController < ApplicationController
     # => reder to /app/views/users/edit.html.rb
   end
 
+  # PATCH /users/:id
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
@@ -36,6 +45,12 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
+
+  # DELETE /users/:id
+  def destroy
+
+  end
+
 
   private
     def user_params

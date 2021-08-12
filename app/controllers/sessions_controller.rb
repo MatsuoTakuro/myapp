@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
+
+  # GET /login
   def new
     # debugger
   end
 
+  # POST /login
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
@@ -16,6 +19,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # DELETE /logout
   def destroy
     log_out if logged_in?
     redirect_to root_url
