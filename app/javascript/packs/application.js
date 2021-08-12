@@ -7,7 +7,6 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-
 // リスト 8.21: 必要なJavaScriptファイルをrequireまたはimportする
 require("jquery")
 import "bootstrap"

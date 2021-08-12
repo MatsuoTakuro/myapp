@@ -18,6 +18,20 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/:id/edit
+  def edit
+    @user = User.find(params[:id])
+    # => reder to /app/views/users/edit.html.rb
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      # 更新に成功した場合を扱う。
+    else
+      render 'edit'
+    end
+  end
 
   private
     def user_params
