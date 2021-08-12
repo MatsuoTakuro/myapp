@@ -71,3 +71,10 @@ gem 'bootstrap-sass', '3.4.1'
 
 # リスト 6.37: bcryptをGemfileに追加する
 gem 'bcrypt',         '3.1.13'
+
+# リスト 10.42:GemfileにFaker gemを追加する
+gem 'faker',                   '2.1.2'
+
+# リスト 10.44:Gemfileにwill_paginateを追加する
+gem 'will_paginate',           '3.1.8'
+gem 'bootstrap-will_paginate', '1.0.0'
