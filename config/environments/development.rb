@@ -39,7 +39,7 @@ Rails.application.configure do
   # リスト 11.16:development環境のメール設定
   host = 'http://localhost:3000'
   # localhostで開発している場合は以下をお使いください
-  config.action_mailer.default_url_optiqons = { host: host, protocol: 'http' }
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
 
   config.action_mailer.perform_caching = false
 
