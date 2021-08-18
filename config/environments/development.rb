@@ -39,7 +39,7 @@ Rails.application.configure do
   # リスト 11.16:development環境のメール設定
   host = 'http://localhost:3000'
   # localhostで開発している場合は以下をお使いください
-  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  config.action_mailer.default_url_optiqons = { host: host, protocol: 'http' }
 
   config.action_mailer.perform_caching = false
 
@@ -81,4 +81,8 @@ Rails.application.configure do
 
   # リスト 1.7: ローカルWebサーバーへの接続を許可する
   config.hosts.clear
+
+  # Railsのログを標準出力に出す
+  # https://ja.stackoverflow.com/questions/67226/docker-%E3%81%A7-rails-%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%A7%E6%A8%99%E6%BA%96%E5%87%BA%E5%8A%9B%E3%82%92%E3%81%BF%E3%81%9F%E3%81%84
+  config.logger = Logger.new(STDOUT)
 end
