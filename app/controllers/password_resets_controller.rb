@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
   def edit
   end
 
-  # PATCH /password_resets/:id/update
+  # PATCH /password_resets/:id
   def update
     if params[:user][:password].empty?
       @user.errors.add(:password, :blank)
