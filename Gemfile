@@ -78,3 +78,10 @@ gem 'faker',                   '2.1.2'
 # リスト 10.44:Gemfileにwill_paginateを追加する
 gem 'will_paginate',           '3.1.8'
 gem 'bootstrap-will_paginate', '1.0.0'
+
+# リスト 13.65:Active Storageバリデーション用のgemを追加する
+gem 'active_storage_validations', '0.8.2'
+
+# リスト 13.69:画像処理用のgemを追加する
+gem 'image_processing',           '1.9.3'
+gem 'mini_magick',                '4.9.5'
