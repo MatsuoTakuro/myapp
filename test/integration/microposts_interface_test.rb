@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MicropostInterfaceTest < ActionDispatch::IntegrationTest
+class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
@@ -9,7 +9,7 @@ class MicropostInterfaceTest < ActionDispatch::IntegrationTest
   test "micropost interface" do
     log_in_as(@user)
     get root_path
-    assert_select 'div.pagination'
+    assert_select 'div.pagination', 2
     assert_select 'input[type=file]'
 
     # 無効な送信
