@@ -106,6 +106,7 @@ class User < ApplicationRecord
         # Micropost.where("user_id IN (#{usersYouFollowing_ids})
         #                                 OR user_id = :user_id", user_id: id)
 
+        # ver.4 (1 query, リスト 14.50:フィードをleft_outer_joinsで作る)
         part_of_feed = "relationships.following_id = :id or microposts.user_id = :id"
         Micropost.left_outer_joins(user: :followers)
                     .where(part_of_feed, { id: self.id }).distinct
