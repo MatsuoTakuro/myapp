@@ -102,9 +102,14 @@ class User < ApplicationRecord
         #                                     user_id:               id)
 
         # ver.3 (1 query)
-        usersYouFollowing_ids = "SELECT followed_id FROM relationships WHERE following_id = :user_id"
-        Micropost.where("user_id IN (#{usersYouFollowing_ids})
-                                        OR user_id = :user_id", user_id: id)
+        # usersYouFollowing_ids = "SELECT followed_id FROM relationships WHERE following_id = :user_id"
+        # Micropost.where("user_id IN (#{usersYouFollowing_ids})
+        #                                 OR user_id = :user_id", user_id: id)
+
+        part_of_feed = "relationships.following_id = :id or microposts.user_id = :id"
+        Micropost.left_outer_joins(user: :followers)
+                    .where(part_of_feed, { id: self.id }).distinct
+                    .includes(:user, image_attachment: :blob)
     end
 
     # ユーザーをフォローする
