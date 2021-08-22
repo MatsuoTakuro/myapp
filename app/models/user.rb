@@ -1,5 +1,20 @@
 class User < ApplicationRecord
-    has_many :microposts, dependent: :destroy
+    # default: class_name to refer is "Micropost" (in /app/models/micropost.rb)
+    # default: foreign key to refer is "user_id"
+    has_many :microposts,           dependent:   :destroy
+
+    has_many :active_relationships,     class_name:  "Relationship",
+                                        foreign_key: "follower_id",
+                                        dependent:   :destroy
+    has_many :passive_relationships,    class_name:  "Relationship",
+                                        foreign_key: "followed_id",
+                                        dependent:   :destroy
+    # "@user.following" is almost equal to "@user.active_relationships.map(&:followed)"
+    has_many :following,                through:     :active_relationships,
+                                        source:      :followed
+    # "@user.followers" is almost equal to "@user.passive_relationships.map(&:follower)"
+    has_many :followers,                through:     :passive_relationships,
+                                        source:      :follower
 
     attr_accessor   :remember_token,
                     :activation_token,
@@ -77,6 +92,23 @@ class User < ApplicationRecord
     # 完全な実装は次章の「ユーザーをフォローする」を参照
     def feed
         Micropost.where("user_id = ?", self.id)
+    end
+
+    # ユーザーをフォローする
+    def follow(other_user)
+        # relationship = self.active_relationships.new(followed_id: other_user.id)
+        # relationship.save
+        following << other_user
+    end
+
+    # ユーザーをフォロー解除する
+    def unfollow(other_user)
+        active_relationships.find_by(followed_id: other_user.id).destroy
+    end
+
+    # 現在のユーザーがフォローしてたらtrueを返す
+    def following?(other_user)
+        following.include?(other_user)
     end
 
     private
