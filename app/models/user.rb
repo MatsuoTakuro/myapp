@@ -4,17 +4,17 @@ class User < ApplicationRecord
     has_many :microposts,           dependent:   :destroy
 
     has_many :active_relationships,     class_name:  "Relationship",
-                                        foreign_key: "follower_id",
+                                        foreign_key: "following_id",
                                         dependent:   :destroy
     has_many :passive_relationships,    class_name:  "Relationship",
                                         foreign_key: "followed_id",
                                         dependent:   :destroy
-    # "@user.following" is almost equal to "@user.active_relationships.map(&:followed)"
-    has_many :following,                through:     :active_relationships,
+    # "@user.usersYouFollowing" is almost equal to "@user.active_relationships.map(&:followed)"
+    has_many :usersYouFollowing,        through:     :active_relationships,
                                         source:      :followed
-    # "@user.followers" is almost equal to "@user.passive_relationships.map(&:follower)"
+    # "@user.followers" is almost equal to "@user.passive_relationships.map(&:following)"
     has_many :followers,                through:     :passive_relationships,
-                                        source:      :follower
+                                        source:      :following
 
     attr_accessor   :remember_token,
                     :activation_token,
@@ -88,17 +88,30 @@ class User < ApplicationRecord
         reset_sent_at < 2.hours.ago
     end
 
-    # 試作feedの定義
-    # 完全な実装は次章の「ユーザーをフォローする」を参照
+    # ユーザーのステータスフィードを返す
     def feed
-        Micropost.where("user_id = ?", self.id)
+        # ver.1 (2 queries)
+        # Micropost.where("user_id IN (?) OR user_id = ?",
+        #                                     self.usersYouFollowing_ids,
+        #                                     self.id)
+
+        # ver.2 (2 queries)
+        # Micropost.where("user_id IN (:usersYouFollowing_ids)
+        #                                 OR user_id = :user_id",
+        #                                     usersYouFollowing_ids: self.usersYouFollowing_ids,
+        #                                     user_id:               id)
+
+        # ver.3 (1 query)
+        usersYouFollowing_ids = "SELECT followed_id FROM relationships WHERE following_id = :user_id"
+        Micropost.where("user_id IN (#{usersYouFollowing_ids})
+                                        OR user_id = :user_id", user_id: id)
     end
 
     # ユーザーをフォローする
     def follow(other_user)
         # relationship = self.active_relationships.new(followed_id: other_user.id)
         # relationship.save
-        following << other_user
+        usersYouFollowing << other_user
     end
 
     # ユーザーをフォロー解除する
@@ -108,7 +121,7 @@ class User < ApplicationRecord
 
     # 現在のユーザーがフォローしてたらtrueを返す
     def following?(other_user)
-        following.include?(other_user)
+        usersYouFollowing.include?(other_user)
     end
 
     private

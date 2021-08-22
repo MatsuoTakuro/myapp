@@ -26,3 +26,11 @@ users = User.order(:created_at).take(6)
     content = Faker::Lorem.sentence(word_count: 5)
     users.each { |user| user.microposts.create!(content: content) }
 end
+
+# 以下のリレーションシップを作成する
+users = User.all
+user  = users.first
+usersYouWillFollow = users[2..50]
+potentialFollowers = users[3..40]
+usersYouWillFollow.each { |userYouWillFollow| user.follow(userYouWillFollow) }
+potentialFollowers.each { |potentialFollower| potentialFollower.follow(user) }
