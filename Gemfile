@@ -83,5 +83,5 @@ gem 'bootstrap-will_paginate', '1.0.0'
 gem 'active_storage_validations', '0.8.2'
 
 # リスト 13.69:画像処理用のgemを追加する
-gem 'image_processing',           '1.9.3'
+gem 'image_processing',           '1.12.2'
 gem 'mini_magick',                '4.9.5'
